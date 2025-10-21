@@ -52,7 +52,7 @@ async def main():
                 response = await agent.ainvoke({
                     "messages": message
                 })
-                """ commented out even though it shouldn't be
+                """ 
                 for p in response["messages"]:
                     print(p)
                 """
