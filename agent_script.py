@@ -356,5 +356,11 @@ def kill_processes_on_port(port):
 
         print(f"Error killing processes on port {port}: {e}")
 
+async def invoke_our_graph(agent, st_messages):
+
+    response = await agent.ainvoke({"messages": st_messages})
+
+    return response
+
 if __name__ == "__main__":
     asyncio.run(main())
