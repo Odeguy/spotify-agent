@@ -9,6 +9,7 @@ from langgraph.graph import MessagesState
 import asyncio
 from mcp_use.client import MCPClient
 from mcp_use.adapters.langchain_adapter import LangChainAdapter
+import subprocess
 
 load_dotenv()
 
@@ -42,6 +43,9 @@ async def main():
 
         agent = await create_graph()
         
+        print(f"\nAuthenticating MCP server...")
+        run_auth()
+
         retrys = 0
         message: str
         while True:
@@ -66,8 +70,24 @@ async def main():
                 print(error_message)
 
                 
+def run_auth():
+    try:
+        result = subprocess.run(
+            ["C:/Program Files/nodejs/npm.cmd", "run", "auth"],
+            check=True,
+            capture_output=True,
+            text=True,
+            cwd="../spotify-mcp-server"
+        )
 
-            
+        if result.stderr: print("Command Error: " + result.stderr)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running npm script: {e}")
+        print(f"Stderr: {e.stderr}")
+        print(f"Stdout: {e.stdout}")
+    except FileNotFoundError:
+        print("Error: npm command not found. Ensure Node.js and npm are installed and in your PATH.")
+
 
 def check_spotify_credentials():
 
