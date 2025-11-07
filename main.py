@@ -1,6 +1,14 @@
+import uvicorn
+
+
 def main():
     print("Hello from spotify-agent!")
 
 
+    
+
+
+
+
 if __name__ == "__main__":
-    main()
+    uvicorn.run(app="backend:app", reload=True, host="0.0.0.0", port=8000)
