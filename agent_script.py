@@ -44,7 +44,7 @@ async def main():
         agent = await create_graph()
         
         print(f"\nAuthenticating MCP server...")
-        run_auth()
+        run_mcp_auth()
 
         retrys = 0
         message: str
@@ -70,7 +70,7 @@ async def main():
                 print(error_message)
 
                 
-def run_auth():
+def run_mcp_auth():
     try:
         result = subprocess.run(
             ["C:/Program Files/nodejs/npm.cmd", "run", "auth"],
