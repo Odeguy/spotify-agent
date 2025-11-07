@@ -379,9 +379,25 @@ def kill_processes_on_port(port):
 
 async def invoke_our_graph(agent, st_messages):
 
-    response = await agent.ainvoke({
-                    "messages": st_messages
-                })
+    #response = await agent.ainvoke({
+                    #"messages": st_messages
+                #})
+    response: dict = {}
+    for i in range(7):
+        try:
+
+            response = await agent.ainvoke({
+                "messages": st_messages
+            })
+
+            print(response)
+            break
+
+        except Exception:
+            error_message = "Failed to Complete Action - " + str(i+1) + "/7 Times"
+            if i == 7: 
+                error_message += ": Terminating"
+            print(error_message)
 
     return response
 

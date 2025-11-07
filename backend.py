@@ -2,7 +2,7 @@ from fastapi import FastAPI, Body
 
 from pydantic import BaseModel
 
-from agent_script import create_graph, invoke_our_graph
+from agent_script import create_graph, invoke_our_graph, run_mcp_auth
 
 import asyncio
 
@@ -28,7 +28,7 @@ async def lifespan(app: FastAPI):
 
     print("Agent created successfully!")
 
-   
+    run_mcp_auth()
 
     yield  # Server is running
 
