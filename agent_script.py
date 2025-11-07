@@ -60,6 +60,7 @@ async def main():
                 for p in response["messages"]:
                     print(p)
                 """
+                print(response)
                 retrys = 0
             except Exception:
                 retrys += 1
@@ -378,7 +379,9 @@ def kill_processes_on_port(port):
 
 async def invoke_our_graph(agent, st_messages):
 
-    response = await agent.ainvoke({"messages": st_messages})
+    response = await agent.ainvoke({
+                    "messages": st_messages
+                })
 
     return response
 

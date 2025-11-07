@@ -58,6 +58,11 @@ if prompt := st.chat_input():
 
         output = output.json()
 
+        print("\n\n")
+        print("OUTPUT")
+        print(output)
+        print("\n\n")
+
         text = output["response"]["messages"][-1]['content']
 
         print(text)

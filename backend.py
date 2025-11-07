@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 
 from pydantic import BaseModel
 
@@ -50,20 +50,17 @@ app = FastAPI(
 )
 
 class ChatQuery(BaseModel):
-
-    message: str
+    input: list
 
 @app.post("/chat")
-
-async def chat(query):
+async def chat(query: ChatQuery):
 
     agent = app.state.agent
 
     response = await invoke_our_graph(agent, query.input)
 
     if agent is None:
-
-        return {"error": "Agent not initialized"}
+        return {"reponse": "kys"}
 
     print(response)
 
