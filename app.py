@@ -11,7 +11,18 @@ import requests
 
 load_dotenv()  # Load environment variables from a .env file if present
 
-st.title("🎵Spotify Agent🎵")
+st.set_page_config(layout="centered")
+st.markdown(
+    """
+    <style>
+    .stMainBlockContainer {
+        max-width: 80rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+st.image(image="spotify-agent-logo.png", width=400)
 
 if "messages" not in st.session_state:
 
@@ -33,24 +44,24 @@ for msg in st.session_state.messages:
 
     if type(msg) == AIMessage:
 
-        st.chat_message("assistant").write(msg.content)
+        st.chat_message("assistant", avatar="robot_2_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg").write(msg.content)
 
     if type(msg) == HumanMessage:
 
-        st.chat_message("user").write(msg.content)
+        st.chat_message("user", avatar="mood_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg").write(msg.content)
 
 # takes new input in chat box from user and invokes the graph
 
-if prompt := st.chat_input():
+if prompt := st.chat_input(width="stretch"):
 
     st.session_state.messages.append(HumanMessage(content=prompt))
 
-    st.chat_message("user").write(prompt)
+    st.chat_message("user", avatar="mood_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg").write(prompt)
 
 
     # Process the AI's response and handles graph events using the callback mechanism
 
-    with st.chat_message("assistant"):
+    with st.chat_message("assistant", avatar="robot_2_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg"):
 
         serialized_messages = [msg.dict() if hasattr(msg, 'dict') else msg for msg in st.session_state.messages]
 

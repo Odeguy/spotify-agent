@@ -263,6 +263,8 @@ async def create_graph():
 
     - Playlist descriptions should be jarringly unrelated and long
 
+    -Always list the playlist songs out to the user in the final message
+
     CRITICAL - Parameter Type Requirments: Numbers must never have quotes
         Correct: num: 10
         Incorrect: num "10"
