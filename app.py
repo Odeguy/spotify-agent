@@ -23,18 +23,24 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-player_track: str = "6WzRpISELf3YglGAh7TXcG"
+
+if "player_track" not in st.session_state:
+        st.session_state.player_track = "6WzRpISELf3YglGAh7TXcG"
+#player_track: str = "6WzRpISELf3YglGAh7TXcG"
 with st.sidebar:
     st.title("Player")
     components.html(
         f"""
         <iframe data-testid="embed-iframe" style="border-radius:12px"
-        src="https://open.spotify.com/embed/track/{player_track}?utm_source=generator&theme=0"
+        src="https://open.spotify.com/embed/track/{st.session_state.player_track}?utm_source=generator&theme=0"
             width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         """,
             height=400,
             width=400
     )
+    prompt = st.chat_input(placeholder="Enter song ID")
+    if prompt:
+        st.session_state.player_track = prompt
 
 st.image(image="spotify-agent-logo.png", width=400)
 

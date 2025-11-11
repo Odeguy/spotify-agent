@@ -265,6 +265,8 @@ async def create_graph():
 
     -Always list the playlist songs out to the user in the final message
 
+    -When listing out a song, include its id
+
     CRITICAL - Parameter Type Requirments: Numbers must never have quotes
         Correct: num: 10
         Incorrect: num "10"
