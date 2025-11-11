@@ -7,6 +7,7 @@ import asyncio
 import nest_asyncio
 import time
 import requests
+import streamlit.components.v1 as components
 
 
 load_dotenv()  # Load environment variables from a .env file if present
@@ -22,6 +23,19 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+player_track: str = "6WzRpISELf3YglGAh7TXcG"
+with st.sidebar:
+    st.title("Player")
+    components.html(
+        f"""
+        <iframe data-testid="embed-iframe" style="border-radius:12px"
+        src="https://open.spotify.com/embed/track/{player_track}?utm_source=generator&theme=0"
+            width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        """,
+            height=400,
+            width=400
+    )
+
 st.image(image="spotify-agent-logo.png", width=400)
 
 if "messages" not in st.session_state:
@@ -89,6 +103,4 @@ if prompt := st.chat_input(width="stretch"):
             placeholder.write(streamed_text)
 
             time.sleep(0.07)  # Adjust speed as needed
-
-
         st.session_state.messages.append(AIMessage(content=text))
