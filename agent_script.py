@@ -78,7 +78,7 @@ def run_mcp_auth():
             check=True,
             capture_output=True,
             text=True,
-            cwd="./spotify-mcp-server"
+            cwd="./mcp-server"
         )
 
         if result.stderr: print("Command Error: " + result.stderr)
