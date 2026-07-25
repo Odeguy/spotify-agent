@@ -8,9 +8,10 @@ import nest_asyncio
 import time
 import requests
 import streamlit.components.v1 as components
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 
-load_dotenv()  # Load environment variables from a .env file if present
+load_dotenv()
 
 st.set_page_config(layout="centered")
 st.markdown(
@@ -46,8 +47,6 @@ st.image(image="spotify-agent-logo.png", width=400)
 
 if "messages" not in st.session_state:
 
-    # default initial message to render in message state
-
     st.session_state["messages"] = [AIMessage(content="How can I help you?")]
 
 if "agent" not in st.session_state:
@@ -60,8 +59,6 @@ agent = st.session_state["agent"]
 
 for msg in st.session_state.messages:
 
-   
-
     if type(msg) == AIMessage:
 
         st.chat_message("assistant", avatar="robot_2_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg").write(msg.content)
@@ -70,7 +67,6 @@ for msg in st.session_state.messages:
 
         st.chat_message("user", avatar="mood_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg").write(msg.content)
 
-# takes new input in chat box from user and invokes the graph
 
 if prompt := st.chat_input(width="stretch"):
 
@@ -78,14 +74,11 @@ if prompt := st.chat_input(width="stretch"):
 
     st.chat_message("user", avatar="mood_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg").write(prompt)
 
-
-    # Process the AI's response and handles graph events using the callback mechanism
-
     with st.chat_message("assistant", avatar="robot_2_24dp_999999_FILL0_wght400_GRAD0_opsz24.svg"):
 
         serialized_messages = [msg.dict() if hasattr(msg, 'dict') else msg for msg in st.session_state.messages]
 
-        output = requests.post("http://localhost:8000/chat", json={"input": serialized_messages})
+        output = requests.post(BACKEND_URL + "/chat", json={"input": serialized_messages})
 
         output = output.json()
 
@@ -108,5 +101,5 @@ if prompt := st.chat_input(width="stretch"):
 
             placeholder.write(streamed_text)
 
-            time.sleep(0.07)  # Adjust speed as needed
+            time.sleep(0.07)
         st.session_state.messages.append(AIMessage(content=text))

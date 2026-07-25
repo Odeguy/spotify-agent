@@ -20,8 +20,6 @@ load_dotenv()
 
 async def lifespan(app: FastAPI):
 
-    # Startup: Create the agent when the server starts
-
     print("Starting up... Creating Spotify agent...")
 
     app.state.agent = await create_graph()
@@ -30,14 +28,9 @@ async def lifespan(app: FastAPI):
 
     run_mcp_auth()
 
-    yield  # Server is running
-
-
-    # Shutdown: Clean up when server stops
+    yield
 
     print("Shutting down...")
-
-# Create FastAPI app with lifecycle management
 
 app = FastAPI(
 

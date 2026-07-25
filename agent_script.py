@@ -223,27 +223,17 @@ def check_groq_credentials():
         return False
 
 async def create_graph():
-    #create client
 
     client = MCPClient.from_config_file("mcp_config.json")
 
-    #create adapter instance
-
     adapter = LangChainAdapter()
-
-    #load in tools from the MCP client
 
     tools = await adapter.create_tools(client)
 
     tools = [t for t in tools if t.name not in['getNowPlaying', 'getRecentlyPlayed', 'getQueue', 'playMusic', 'pausePlayback', 'skipToNext', 'skipToPrevious', 
                                                'resumePlayback', 'addToQueue', 'getMyPlaylists','getUsersSavedTracks', 'saveOrRemoveAlbum', 'checkUsersSavedAlbums']]
-    
-    #define llm
 
     llm = ChatGroq(model='meta-llama/llama-4-scout-17b-16e-instruct')
-
-
-    #bind tools
 
     llm_with_tools = llm.bind_tools(tools, parallel_tool_calls=False)
 
@@ -283,17 +273,11 @@ async def create_graph():
 
         return {"messages": [llm_with_tools.invoke([system_msg] + state["messages"])]}
 
-    # Graph
-
     builder = StateGraph(MessagesState)
-
-    # Define nodes: these do the work
 
     builder.add_node("assistant", assistant)
 
     builder.add_node("tools", ToolNode(tools))
-
-    # Define edges: these determine the control flow
 
     builder.add_edge(START, "assistant")
 
