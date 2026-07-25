@@ -75,7 +75,6 @@ dependencies = [
     "python-dotenv==1.1.1",
     "python-multipart==0.0.20",
     "pytz==2025.2",
-    "pywin32==311",
     "pyyaml==6.0.3",
     "referencing==0.37.0",
     "requests==2.32.5",
