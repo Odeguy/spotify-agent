@@ -78,7 +78,7 @@ def run_mcp_auth():
             check=True,
             capture_output=True,
             text=True,
-            cwd="../spotify-mcp-server"
+            cwd="./spotify-mcp-server"
         )
 
         if result.stderr: print("Command Error: " + result.stderr)
@@ -87,18 +87,11 @@ def run_mcp_auth():
         print(f"Stderr: {e.stderr}")
         print(f"Stdout: {e.stdout}")
     except FileNotFoundError:
-        print("Error: npm command not found. Ensure Node.js and npm are installed and in your PATH.")
+        print("Error: npm command not found.")
 
 
 def check_spotify_credentials():
 
-    """
-
-    Check if Spotify API credentials are valid by attempting to get an access token.
-
-    Returns True if valid, False otherwise.
-
-    """
 
     client_id = os.getenv("SPOTIFY_CLIENT_ID")
 
@@ -166,17 +159,8 @@ def check_spotify_credentials():
 
     
 def check_groq_credentials():
-    """
-    Check if Groq API credentials are valid by attempting to get an access token.
 
-    Returns True if valid, False otherwise.
-
-    """
     api_key = os.getenv("GROQ_API_KEY")
-
-    
-
-    # Check if credentials exist
 
     if not api_key:
 
